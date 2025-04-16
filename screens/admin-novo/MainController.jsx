@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import SidebarMenu from "./SidebarMenu";
 import Restaurante from "./screens/Restaurante";
 import Cardapio from "./screens/Cardapio";
-import { Box, Typography, Toolbar, Hidden, CssBaseline } from "@mui/material";
+import { Box, Typography, Toolbar, CssBaseline } from "@mui/material";
 import Loading from "../../components/Loading";
 
 import Construction from "./screens/Construction";
@@ -60,9 +60,8 @@ const MainController = () => {
             mt: { xs: "-50px", md: 0 },
           }}
         >
-          <Hidden mdUp>
-            <Toolbar />
-          </Hidden>
+          <Toolbar />
+
           {renderContent()}
         </Box>
       </Box>

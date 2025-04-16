@@ -1,5 +1,8 @@
 import React from "react";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createRoot } from "react-dom/client";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+
 import PerfilEmp from "../screens/PerfilEmp.jsx";
 import { CadPrato } from "../screens/CadPrato.jsx";
 import { Login } from "../screens/Login.jsx";
@@ -9,27 +12,48 @@ import EditPrato from "../screens/EditPrato.jsx";
 import Restaurant from "../screens/Restaurant.jsx";
 import MainController from "../screens/admin-novo/MainController.jsx";
 
-function App() {
-  const router = createBrowserRouter([
-    { path: "/", element: <Restaurant /> },
-    { path: "/perfil-da-loja/:restaurantName", element: <PerfilEmp /> },
-    { path: "/login", element: <Login /> },
-    { path: "/cadastro-admin", element: <CadAdmin /> },
-    { path: "/cadastro-restaurante", element: <CadRestaurante /> },
-    { path: "/adminnovo", element: <MainController /> },
-    { path: "/cad-prato", element: <CadPrato /> },
-    { path: "/edit-prato", element: <EditPrato /> },
-    {
-      path: "*",
-      element: <h1>Not Found</h1>,
+const temaRest = createTheme({
+  palette: {
+    primary: {
+      main: "#F05738",
     },
-  ]);
+    background: {
+      default: "#fff",
+      secondary: "#f5f5f5",
+      cinza: "#CFCFCF",
+    },
+    text: {
+      primary: "#333333",
+      secondary: "#8C8C8C",
+      white: "#fff",
+      details: "#8C8C8C",
+    },
+    decorations: {
+      divider: "#DCDCDC",
+    },
+  },
+  shape: {
+    borderRadius: 5,
+  },
+  typography: {
+    fontFamily: "Lexend, sans-serif",
+  },
+});
 
-  return (
-    <ThemeProvider theme={temaRest}>
-      <RouterProvider router={router} />
-    </ThemeProvider>
-  );
-}
-
-export default App;
+createRoot(document.getElementById("root")).render(
+  <ThemeProvider theme={temaRest}>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Restaurant />} />
+        <Route path="/perfil-da-loja" element={<PerfilEmp />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/cadastro-admin" element={<CadAdmin />} />
+        <Route path="/cadastro-restaurante" element={<CadRestaurante />} />
+        <Route path="/adminnovo" element={<MainController />} />
+        <Route path="/cad-prato" element={<CadPrato />} />
+        <Route path="/edit-prato" element={<EditPrato />} />
+        <Route path="*" element={<h1>Not Found</h1>} />
+      </Routes>
+    </BrowserRouter>
+  </ThemeProvider>
+);

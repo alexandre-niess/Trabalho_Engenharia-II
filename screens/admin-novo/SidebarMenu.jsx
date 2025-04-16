@@ -13,7 +13,6 @@ import {
   IconButton,
   AppBar,
   Toolbar,
-  Hidden,
   useTheme, // Importando useTheme
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -32,24 +31,23 @@ const SidebarMenu = ({ options, onSelect, activeScreen }) => {
   const drawer = (
     <div>
       {/* Apenas exibe a parte do Avatar e o texto Admin em telas médias e maiores */}
-      <Hidden mdDown>
-        <Box
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            gap: 2,
-            p: 2,
-            backgroundColor: theme.palette.primary.main, // Usando o tema
-            color: "white",
-          }}
-        >
-          <Avatar
-            src="https://cdn-icons-png.flaticon.com/512/149/149071.png"
-            alt="Logo"
-          />
-          <Typography variant="h6">Admin</Typography>
-        </Box>
-      </Hidden>
+
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          gap: 2,
+          p: 2,
+          backgroundColor: theme.palette.primary.main, // Usando o tema
+          color: "white",
+        }}
+      >
+        <Avatar
+          src="https://cdn-icons-png.flaticon.com/512/149/149071.png"
+          alt="Logo"
+        />
+        <Typography variant="h6">Admin</Typography>
+      </Box>
 
       {/* Adicionando marginTop em telas pequenas para compensar o AppBar */}
       <Box
@@ -103,79 +101,70 @@ const SidebarMenu = ({ options, onSelect, activeScreen }) => {
 
   return (
     <Box sx={{ display: "flex" }}>
-      <Hidden mdUp>
-        <AppBar
-          position="fixed"
-          sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
-        >
-          <Toolbar>
-            <IconButton
-              color="inherit"
-              aria-label="open drawer"
-              edge="start"
-              onClick={handleDrawerToggle}
-              sx={{ mr: 2 }}
-            >
-              <MenuIcon />
-            </IconButton>
+      <AppBar
+        position="fixed"
+        sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
+      >
+        <Toolbar>
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            edge="start"
+            onClick={handleDrawerToggle}
+            sx={{ mr: 2 }}
+          >
+            <MenuIcon />
+          </IconButton>
 
-            {/* Aqui alteramos o que aparece em telas pequenas */}
-            <Typography variant="h6" noWrap>
-              <Hidden smDown>
-                {/* Título padrão para telas maiores */}
-                Restaurante Admin
-              </Hidden>
-              <Hidden smUp>
-                {/* Nome da sessão ativa em telas pequenas */}
-                {activeScreen}
-              </Hidden>
-            </Typography>
-          </Toolbar>
-        </AppBar>
-      </Hidden>
+          {/* Aqui alteramos o que aparece em telas pequenas */}
+          <Typography variant="h6" noWrap>
+            {/* Título padrão para telas maiores */}
+            Restaurante Admin
+            {/* Nome da sessão ativa em telas pequenas */}
+            {activeScreen}
+          </Typography>
+        </Toolbar>
+      </AppBar>
 
       <Box
         component="nav"
         sx={{ width: { md: drawerWidth }, flexShrink: { md: 0 } }}
         aria-label="mailbox folders"
       >
-        <Hidden mdUp implementation="css">
-          <Drawer
-            variant="temporary"
-            anchor="left"
-            open={mobileOpen}
-            onClose={handleDrawerToggle}
-            ModalProps={{
-              keepMounted: true,
-            }}
-            sx={{
-              display: { xs: "block", md: "none" },
-              "& .MuiDrawer-paper": {
-                boxSizing: "border-box",
-                width: drawerWidth,
-              },
-            }}
-          >
-            {drawer}
-          </Drawer>
-        </Hidden>
-        <Hidden mdDown implementation="css">
-          <Drawer
-            variant="permanent"
-            sx={{
-              display: { xs: "none", md: "block" },
-              "& .MuiDrawer-paper": {
-                boxSizing: "border-box",
-                width: drawerWidth,
-                borderTopRightRadius: 40,
-                borderBottomRightRadius: 40,
-              },
-            }}
-            open
-          >
-            {drawer}
-          </Drawer>
-        </Hidden>
+        <Drawer
+          variant="temporary"
+          anchor="left"
+          open={mobileOpen}
+          onClose={handleDrawerToggle}
+          ModalProps={{
+            keepMounted: true,
+          }}
+          sx={{
+            display: { xs: "block", md: "none" },
+            "& .MuiDrawer-paper": {
+              boxSizing: "border-box",
+              width: drawerWidth,
+            },
+          }}
+        >
+          {drawer}
+        </Drawer>
+
+        <Drawer
+          variant="permanent"
+          sx={{
+            display: { xs: "none", md: "block" },
+            "& .MuiDrawer-paper": {
+              boxSizing: "border-box",
+              width: drawerWidth,
+              borderTopRightRadius: 40,
+              borderBottomRightRadius: 40,
+            },
+          }}
+          open
+        >
+          {drawer}
+        </Drawer>
       </Box>
     </Box>
   );
