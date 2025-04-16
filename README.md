@@ -31,7 +31,6 @@ npm -v
 
    ```bash
    git clone https://github.com/alexandre-niess/Plate_POS_System.git
-   cd Plate_POS_System
    ```
 
 2. **Instale as dependências do projeto:**
