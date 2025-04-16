@@ -2,7 +2,6 @@ import React from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
-
 import PerfilEmp from "../screens/PerfilEmp.jsx";
 import { CadPrato } from "../screens/CadPrato.jsx";
 import { Login } from "../screens/Login.jsx";
@@ -10,7 +9,7 @@ import { CadAdmin } from "../screens/CadAdmin.jsx";
 import CadRestaurante from "../screens/CadRestaurante/CadRestaurante.jsx";
 import EditPrato from "../screens/EditPrato.jsx";
 import Restaurant from "../screens/Restaurant.jsx";
-import MainController from "../screens/admin-novo/MainController.jsx";
+import MainController from "../screens/admin/MainController.jsx";
 
 const temaRest = createTheme({
   palette: {
@@ -49,7 +48,7 @@ createRoot(document.getElementById("root")).render(
         <Route path="/login" element={<Login />} />
         <Route path="/cadastro-admin" element={<CadAdmin />} />
         <Route path="/cadastro-restaurante" element={<CadRestaurante />} />
-        <Route path="/adminnovo" element={<MainController />} />
+        <Route path="/admin" element={<MainController />} />
         <Route path="/cad-prato" element={<CadPrato />} />
         <Route path="/edit-prato" element={<EditPrato />} />
         <Route path="*" element={<h1>Not Found</h1>} />

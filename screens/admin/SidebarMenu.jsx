@@ -103,7 +103,10 @@ const SidebarMenu = ({ options, onSelect, activeScreen }) => {
     <Box sx={{ display: "flex" }}>
       <AppBar
         position="fixed"
-        sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        sx={{
+          zIndex: (theme) => theme.zIndex.drawer + 1,
+          display: { xs: "block", md: "none" },
+        }}
       >
         <Toolbar>
           <IconButton

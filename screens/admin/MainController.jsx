@@ -3,16 +3,12 @@ import SidebarMenu from "./SidebarMenu";
 import Restaurante from "./screens/Restaurante";
 import Cardapio from "./screens/Cardapio";
 import { Box, Typography, Toolbar, CssBaseline } from "@mui/material";
-import Loading from "../../components/Loading";
+import { restaurantMock } from "./screens/dadosmockados";
 
 import Construction from "./screens/Construction";
 
 const MainController = () => {
   const [activeScreen, setActiveScreen] = useState("Restaurante");
-
-  if (loading) {
-    return <Loading />;
-  }
 
   const options = [
     { label: "Restaurante", icon: "IconThree" },
@@ -26,9 +22,9 @@ const MainController = () => {
   const renderContent = () => {
     switch (activeScreen) {
       case "Restaurante":
-        return <Restaurante restaurant={restaurant} />;
+        return <Restaurante restaurant={restaurantMock} />;
       case "Cardápio":
-        return <Cardapio restaurant={restaurant} />;
+        return <Cardapio restaurant={restaurantMock} />;
       case "Pedidos":
         return <Construction />;
       case "Fidelidade":

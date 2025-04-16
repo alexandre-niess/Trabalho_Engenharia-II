@@ -1,106 +1,181 @@
-
 # Plate POS System
 
 ## Sobre o Projeto
 
-O **Plate** é um POS System (*Point of Sale* ou Ponto de Venda), desenvolvido com **ReactJS** usando **Vite** como ferramenta de build. O propósito do Plate é ser uma plataforma completa para a gestão de restaurantes e outros pontos de venda, facilitando operações diárias, como o gerenciamento de produtos, pedidos, e perfis de funcionários.
+O **Plate** é um sistema de Ponto de Venda (_Point of Sale_ - POS), desenvolvido com **ReactJS** e utilizando **Vite** como ferramenta de build. Seu objetivo é fornecer uma plataforma completa e moderna para a gestão de restaurantes e estabelecimentos similares, facilitando o gerenciamento de produtos, pedidos, perfis de funcionários e muito mais.
 
-A plataforma será lançada inicialmente com um conjunto básico de funcionalidades, mas possui um roadmap de desenvolvimento que inclui a adição progressiva de novos recursos.
+A plataforma será lançada inicialmente com um conjunto básico de funcionalidades, com um **roadmap contínuo de evolução e novos recursos**.
 
-## Funcionalidades
+---
 
-- Cadastro e edição de restaurantes e produtos.
-- Gerenciamento de perfis de funcionários.
-- Sistema de login e autenticação.
-- Integração com Firebase para backend e banco de dados.
+## ✅ Pré-requisitos
 
-## Estrutura de Pastas
+Antes de iniciar, você precisa ter instalado em sua máquina:
 
-Abaixo está a estrutura de pastas do projeto, baseada na imagem fornecida:
+- [Node.js (versão 18.x ou superior)](https://nodejs.org/)
+- [Git](https://git-scm.com/) para clonar o repositório
+- Um gerenciador de pacotes como **npm** ou **yarn** (o projeto usa `npm`)
+
+Verifique se o Node está instalado corretamente:
+
+```bash
+node -v
+npm -v
+```
+
+---
+
+## 🚀 Como Executar o Projeto Localmente
+
+1. **Clone este repositório:**
+
+   ```bash
+   git clone https://github.com/alexandre-niess/Plate_POS_System.git
+   cd Plate_POS_System
+   ```
+
+2. **Instale as dependências do projeto:**
+
+   ```bash
+   npm install
+   ```
+
+3. **Inicie o servidor de desenvolvimento:**
+
+   ```bash
+   npm run dev
+   ```
+
+4. Acesse em seu navegador:
+   ```
+   http://localhost:3000
+   ```
+
+> 💡 O Vite irá fazer _hot reload_ automaticamente conforme você altera os arquivos do projeto.
+
+---
+
+## ✨ Funcionalidades
+
+- Cadastro e edição de restaurantes
+- Cadastro e edição de produtos
+- Gerenciamento de perfis de funcionários
+- Login e autenticação
+- Interface responsiva para dispositivos móveis
+
+---
+
+## 📁 Estrutura de Pastas
 
 ```
-Plate_POS_System/
-│
-├── .firebase/
-│
+├── .gitignore
+├── README.md
 ├── components/
-│   ├── CadRestaurante/
-│   ├── EditRestaurante/
-│   └── LandingPage/
-│
-├── dist/
-│
-├── node_modules/
-│
+│   ├── CardAdmin.jsx
+│   ├── CardProduto.jsx
+│   ├── Footer.jsx
+│   ├── Header.jsx
+│   ├── Icons.jsx
+│   ├── IsOpen.jsx
+│   ├── Loading.jsx
+│   └── TabelaProdutos.jsx
 ├── public/
-│   └── index.html
-│
+│   ├── hamburguer.png
+│   ├── mockup_plate.png
+│   ├── suco.png
+│   └── xburguer.png
 ├── screens/
-│   ├── Admin.jsx
 │   ├── CadAdmin.jsx
 │   ├── CadPrato.jsx
+│   ├── CadRestaurante/
+│   │   ├── CadRestaurante.jsx
+│   │   ├── Step1.jsx
+│   │   ├── Step2.jsx
+│   │   ├── Step3.jsx
+│   │   └── Step4.jsx
 │   ├── Carrinho.jsx
 │   ├── EditPrato.jsx
 │   ├── Login.jsx
 │   ├── PerfilEmp.jsx
 │   ├── Produto.jsx
-│   └── Restaurant.jsx
-│
+│   ├── Restaurant.jsx
+│   └── admin/
+│       ├── MainController.jsx
+│       ├── SidebarMenu.jsx
+│       └── screens/
+│           ├── Cardapio.jsx
+│           ├── Construction.jsx
+│           ├── Restaurante.jsx
+│           └── dadosmockados.js
 ├── src/
-│   ├── AdminRestaurantContext.jsx
 │   ├── App.jsx
-│   ├── firebaseConfig.js
-│   ├── main.jsx
-│   ├── PratoContext.jsx
-│   ├── ProtectedRoute.jsx
-│   └── RestaurantContext.jsx
-│
-├── .firebaserc
-├── .gitignore
-├── firebase.json
-└── package.json
+│   └── main.jsx
+├── index.html
+├── package.json
+├── package-lock.json
+└── vite.config.js
 ```
 
-### Descrição das Principais Pastas e Arquivos:
+---
 
-- **components/**: Contém os componentes principais do sistema, organizados em subpastas de acordo com a funcionalidade.
-- **screens/**: Contém as telas principais do sistema, incluindo telas de administração, cadastro, edição, login e gerenciamento de produtos.
-- **src/**: Contém arquivos de configuração e contexto, incluindo as rotas principais (definidas em `main.jsx`) e os contextos de estado do restaurante e prato.
-- **public/**: Contém o arquivo `index.html`, ponto de entrada da aplicação.
-- **firebaseConfig.js**: Contém a configuração para integração com o Firebase, que é utilizado como provedor de backend e banco de dados.
+## 🔧 Descrição de Arquivos
 
-## Como Executar o Projeto
+- **components/**: Componentes reutilizáveis da interface (cards, headers, ícones, etc.).
+- **screens/**: Telas completas e principais fluxos da aplicação.
+- **admin/screens/**: Seção de telas administrativas, como `Cardapio` e `Restaurante`.
+- **public/**: Arquivos estáticos e imagens.
+- **src/**: Ponto de entrada da aplicação (`main.jsx`).
 
-1. Clone este repositório:
+---
+
+## 🗺️ Roadmap
+
+### Versão 1.0 (Atual)
+
+- Cadastro de restaurantes e pratos
+- Gerenciamento básico via painel administrativo
+
+### Futuras Versões
+
+- Integração com gateways de pagamento
+- Dashboard de relatórios e métricas financeiras
+- Suporte a múltiplos estabelecimentos
+- Módulo de fidelidade e cupons
+- Chat de atendimento ao cliente
+
+---
+
+## 🤝 Contribuição
+
+Contribuições são bem-vindas! Siga os passos abaixo:
+
+1. Faça um fork do projeto
+2. Crie uma branch com sua feature ou correção:
    ```bash
-   git clone https://github.com/alexandre-niess/Plate_POS_System.git
+   git checkout -b feature/nova-funcionalidade
    ```
-2. Instale as dependências:
+3. Commit suas alterações:
    ```bash
-   cd Plate_POS_System
-   npm install
+   git commit -m "feat: nova funcionalidade"
    ```
-3. Execute o servidor de desenvolvimento:
+4. Suba a branch:
    ```bash
-   npm run dev
+   git push origin feature/nova-funcionalidade
    ```
+5. Abra um **Pull Request**
 
-O projeto estará disponível em `http://localhost:3000`.
+---
 
-## Roadmap
+## 📬 Contato
 
-- **Versão 1.0**: Lançamento inicial com funcionalidades básicas de gerenciamento de restaurantes e produtos.
-- **Futuras Versões**:
-  - Integração com sistemas de pagamento.
-  - Relatórios financeiros.
-  - Expansão para múltiplos pontos de venda.
+Em caso de dúvidas, sugestões ou bugs, entre em contato:
 
-## Contribuição
+**Autor:** [Alexandre Niess](https://portfolio-alexandre-niess.web.app/)
 
-Sinta-se à vontade para contribuir com o projeto. Faça um fork do repositório, crie uma nova branch com suas funcionalidades ou correções, e abra um pull request.
+---
 
-## Contato
+> 💡 Este projeto está em desenvolvimento ativo. Fique à vontade para contribuir ou acompanhar as atualizações!
 
-Caso encontre algum problema, deseje enviar alguma sugestão, etc. [Entre em contato!](https://portfolio-alexandre-niess.web.app/)
+```
 
-
+```

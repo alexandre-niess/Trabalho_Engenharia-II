@@ -16,10 +16,18 @@ import {
 
 import EditIcon from "@mui/icons-material/Edit";
 
-const Restaurante = () => {
+const Restaurante = ({ restaurant }) => {
   const [tabIndex, setTabIndex] = useState(0);
-  const [restaurant, setRestaurant] = useState(null);
-  const [error, setError] = useState(null); // Estado para gerenciar erros
+
+  const handleTabChange = (event, newValue) => {
+    setTabIndex(newValue);
+  };
+
+  if (!restaurant) {
+    return (
+      <Typography variant="h6">Carregando dados do restaurante...</Typography>
+    );
+  }
 
   return (
     <Box sx={{ flexGrow: 1 }}>

@@ -1,0 +1,47 @@
+export const restaurantMock = {
+  nome: "Dona Dika",
+  descricao: "Comida caseira com amor",
+  imagemURL: "https://via.placeholder.com/120",
+  cep: "12345-678",
+  logradouro: "Rua da Cozinha",
+  numero: "100",
+  complemento: "Sala 2",
+  bairro: "Centro",
+  cidade: "São Paulo",
+  telefone: "(11) 98765-4321",
+  email: "contato@donadika.com",
+  facebook: "facebook.com/donadika",
+  instagram: "@donadikaoficial",
+  pagamentoDinheiro: true,
+  pagamentoCartao: true,
+  cartoes: "Visa, MasterCard",
+  horarios: ["Seg a Sex - 10h às 20h", "Sábado - 10h às 15h"],
+  produtos: [
+    {
+      nome: "Feijoada",
+      descricao: "Completa, com arroz, couve e farofa",
+      preco: 29.9,
+      imagemPrato: "https://via.placeholder.com/300x200?text=Feijoada",
+    },
+    {
+      nome: "Escondidinho",
+      descricao: "De carne seca com purê de mandioca",
+      preco: 25.5,
+      imagemPrato: "https://via.placeholder.com/300x200?text=Escondidinho",
+    },
+  ],
+  adicionais: [
+    {
+      nome: "Queijo extra",
+      descricao: "Fatias grelhadas",
+      preco: 4.5,
+      imagemPrato: "https://via.placeholder.com/300x200?text=Queijo",
+    },
+    {
+      nome: "Bacon crocante",
+      descricao: "Adicional de bacon",
+      preco: 3.5,
+      imagemPrato: "https://via.placeholder.com/300x200?text=Bacon",
+    },
+  ],
+};

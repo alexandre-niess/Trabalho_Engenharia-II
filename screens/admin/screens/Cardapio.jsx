@@ -17,16 +17,17 @@ import { useMediaQuery } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import CardAdmin from "../../../components/CardAdmin";
-import { produtosMockados, adicionaisMockados } from "./dadosmockados";
 import Button from "@mui/material/Button";
 
-const Cardapio = () => {
+const Cardapio = ({ restaurant }) => {
+  const produtosMockados = restaurant.produtos;
+  const adicionaisMockados = restaurant.adicionais;
   const [tabIndex, setTabIndex] = useState(0);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchField, setSearchField] = useState("nome");
   const [menuOpen, setMenuOpen] = useState(false);
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("md")); // Detecta se está no mobile
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
   const handleTabChange = (event, newValue) => {
     setTabIndex(newValue);
@@ -38,7 +39,7 @@ const Cardapio = () => {
 
   const handleSearchFieldChange = (field) => {
     setSearchField(field);
-    setMenuOpen(false); // Fecha o menu após a seleção
+    setMenuOpen(false);
   };
 
   const filterItems = (items) => {
@@ -48,7 +49,6 @@ const Cardapio = () => {
     });
   };
 
-  // Fecha o menu ao clicar fora
   const handleClickAway = () => {
     setMenuOpen(false);
   };
@@ -107,9 +107,9 @@ const Cardapio = () => {
               <Box
                 sx={{
                   display: "flex",
-                  flexDirection: isMobile ? "column" : "row", // Coluna no mobile, linha no desktop
-                  justifyContent: "space-between", // Espaço entre o texto e a searchbar
-                  alignItems: isMobile ? "flex-start" : "center", // Alinha à esquerda no mobile, centraliza no desktop
+                  flexDirection: isMobile ? "column" : "row",
+                  justifyContent: "space-between",
+                  alignItems: isMobile ? "flex-start" : "center",
                   marginBottom: 3,
                 }}
               >
@@ -117,16 +117,16 @@ const Cardapio = () => {
                   sx={{
                     display: "flex",
                     width: "100%",
-                    justifyContent: isMobile ? "space-between" : "", // Espaço entre o título e o botão
-                    marginTop: isMobile ? "" : "20px", // Espaçamento superior no mobile
-                    alignItems: "center", // Centraliza verticalmente
-                    gap: 2, // Espaçamento entre o título e o botão
+                    justifyContent: isMobile ? "space-between" : "",
+                    marginTop: isMobile ? "" : "20px",
+                    alignItems: "center",
+                    gap: 2,
                   }}
                 >
                   <Typography
                     variant="h5"
                     gutterBottom
-                    sx={{ marginTop: isMobile ? "10px" : "10px" }} // Ajusta o espaçamento superior conforme o tamanho da tela
+                    sx={{ marginTop: isMobile ? "10px" : "10px" }}
                   >
                     Produtos
                   </Typography>
@@ -134,8 +134,8 @@ const Cardapio = () => {
                   <Button
                     variant="contained"
                     sx={{
-                      marginTop: isMobile ? "10px" : 0, // Margem superior no mobile para o botão ficar abaixo do título
-                      alignSelf: isMobile ? "flex-start" : "center", // Centraliza no desktop, alinha à esquerda no mobile
+                      marginTop: isMobile ? "10px" : 0,
+                      alignSelf: isMobile ? "flex-start" : "center",
                     }}
                   >
                     Incluir produto
@@ -146,8 +146,8 @@ const Cardapio = () => {
                   <Box
                     sx={{
                       position: "relative",
-                      width: isMobile ? "100%" : "auto", // Aumenta a largura no mobile
-                      marginTop: isMobile ? 2 : 0, // Adiciona espaçamento no topo no mobile
+                      width: isMobile ? "100%" : "auto",
+                      marginTop: isMobile ? 2 : 0,
                     }}
                   >
                     <TextField
@@ -155,11 +155,11 @@ const Cardapio = () => {
                       onChange={handleSearchChange}
                       placeholder="Buscar produtos..."
                       sx={{
-                        width: isMobile ? "100%" : "400px", // Ocupa 100% no mobile e 300px em telas maiores
-                        marginLeft: isMobile ? 0 : "auto", // No mobile, sem margem à esquerda
-                        marginTop: isMobile ? 0 : "15px", // Adiciona espaçamento no topo no mobile
+                        width: isMobile ? "100%" : "400px",
+                        marginLeft: isMobile ? 0 : "auto",
+                        marginTop: isMobile ? 0 : "15px",
                         "& .MuiOutlinedInput-root": {
-                          borderRadius: "200px", // Aumenta o border-radius aqui
+                          borderRadius: "200px",
                         },
                       }}
                       InputProps={{
@@ -189,7 +189,7 @@ const Cardapio = () => {
                           backgroundColor: "white",
                           boxShadow: "0px 4px 8px rgba(0,0,0,0.2)",
                           zIndex: 999,
-                          width: "200px", // Define uma largura fixa para o menu
+                          width: "200px",
                         }}
                       >
                         <MenuItem
@@ -234,16 +234,15 @@ const Cardapio = () => {
         )}
 
         {/* Conteúdo para Adicionais */}
-        {/* Conteúdo para Adicionais */}
         {tabIndex === 1 && (
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <Box
                 sx={{
                   display: "flex",
-                  flexDirection: isMobile ? "column" : "row", // Coluna no mobile, linha no desktop
-                  justifyContent: "space-between", // Espaço entre o título e a searchbar
-                  alignItems: isMobile ? "flex-start" : "center", // Alinha à esquerda no mobile, centraliza no desktop
+                  flexDirection: isMobile ? "column" : "row",
+                  justifyContent: "space-between",
+                  alignItems: isMobile ? "flex-start" : "center",
                   marginBottom: 3,
                 }}
               >
@@ -251,16 +250,16 @@ const Cardapio = () => {
                   sx={{
                     display: "flex",
                     width: "100%",
-                    justifyContent: isMobile ? "space-between" : "", // Espaço entre o título e o botão
-                    marginTop: isMobile ? "" : "20px", // Espaçamento superior no mobile
-                    alignItems: "center", // Centraliza verticalmente
-                    gap: 2, // Espaçamento entre o título e o botão
+                    justifyContent: isMobile ? "space-between" : "",
+                    marginTop: isMobile ? "" : "20px",
+                    alignItems: "center",
+                    gap: 2,
                   }}
                 >
                   <Typography
                     variant="h5"
                     gutterBottom
-                    sx={{ marginTop: isMobile ? "10px" : "10px" }} // Ajusta o espaçamento superior conforme o tamanho da tela
+                    sx={{ marginTop: isMobile ? "10px" : "10px" }}
                   >
                     Adicionais
                   </Typography>
@@ -268,8 +267,8 @@ const Cardapio = () => {
                   <Button
                     variant="contained"
                     sx={{
-                      marginTop: isMobile ? "10px" : 0, // Margem superior no mobile para o botão ficar abaixo do título
-                      alignSelf: isMobile ? "flex-start" : "center", // Centraliza no desktop, alinha à esquerda no mobile
+                      marginTop: isMobile ? "10px" : 0,
+                      alignSelf: isMobile ? "flex-start" : "center",
                     }}
                   >
                     Incluir adicional
@@ -280,8 +279,8 @@ const Cardapio = () => {
                   <Box
                     sx={{
                       position: "relative",
-                      width: isMobile ? "100%" : "auto", // Aumenta a largura no mobile
-                      marginTop: isMobile ? 2 : 0, // Adiciona espaçamento no topo no mobile
+                      width: isMobile ? "100%" : "auto",
+                      marginTop: isMobile ? 2 : 0,
                     }}
                   >
                     <TextField
@@ -289,11 +288,11 @@ const Cardapio = () => {
                       onChange={handleSearchChange}
                       placeholder="Buscar adicionais..."
                       sx={{
-                        width: isMobile ? "100%" : "400px", // Ocupa 100% no mobile e 300px em telas maiores
-                        marginLeft: isMobile ? 0 : "auto", // No mobile, sem margem à esquerda
-                        marginTop: isMobile ? 0 : "15px", // Adiciona espaçamento no topo no desktop
+                        width: isMobile ? "100%" : "400px",
+                        marginLeft: isMobile ? 0 : "auto",
+                        marginTop: isMobile ? 0 : "15px",
                         "& .MuiOutlinedInput-root": {
-                          borderRadius: "200px", // Aumenta o border-radius aqui
+                          borderRadius: "200px",
                         },
                       }}
                       InputProps={{
@@ -323,7 +322,7 @@ const Cardapio = () => {
                           backgroundColor: "white",
                           boxShadow: "0px 4px 8px rgba(0,0,0,0.2)",
                           zIndex: 999,
-                          width: "200px", // Define uma largura fixa para o menu
+                          width: "200px",
                         }}
                       >
                         <MenuItem
