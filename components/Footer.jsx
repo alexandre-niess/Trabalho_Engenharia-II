@@ -3,8 +3,12 @@ import Box from "@mui/material/Box";
 import { IconButton } from "@mui/material";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import { Link, useLocation } from "react-router-dom";
 
 function Footer() {
+  const location = useLocation();
+  const currentPath = location.pathname;
+
   return (
     <>
       <Box
@@ -23,21 +27,23 @@ function Footer() {
           borderColor: "decorations.divider",
         }}
       >
-        <Box
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            borderTop: "1px solid",
-            borderColor: "primary.main",
-          }}
-        >
-          <IconButton>
-            <MenuBookIcon sx={{ color: "primary.main" }} />
+        <Box sx={{ display: "flex", alignItems: "center" }}>
+          <IconButton component={Link} to="/">
+            <MenuBookIcon
+              sx={{
+                color: currentPath === "/" ? "primary.main" : "text.details",
+              }}
+            />
           </IconButton>
         </Box>
         <Box sx={{ display: "flex", alignItems: "center" }}>
-          <IconButton>
-            <ShoppingCartIcon sx={{ color: "text.details" }} />
+          <IconButton component={Link} to="/carrinho">
+            <ShoppingCartIcon
+              sx={{
+                color:
+                  currentPath === "/carrinho" ? "primary.main" : "text.details",
+              }}
+            />
           </IconButton>
         </Box>
       </Box>
