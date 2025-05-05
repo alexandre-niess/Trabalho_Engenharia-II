@@ -19,53 +19,43 @@ import CloseIcon from "@mui/icons-material/Close";
 import Footer from "../components/Footer";
 import IsOpen from "/components/IsOpen.jsx";
 import Loading from "../components/Loading";
+import { buscarPizzas, buscarBebidas } from "../service/produtoService";
 
-// 🧪 Mock de restaurante
-const restaurant = {
-  nome: "Dona Dika",
+// 🧪 Mock de pizzariae
+const pizzaria = {
+  nome: "Pizzaria Matteo",
   imagemURL: "",
-  categorias: ["Lanches", "Bebidas"],
+  categorias: ["Pizzas Salgadas", "Pizzas Doces", "Bebidas"],
 };
 
-// 🧪 Mock de pratos
-const pratos = [
-  {
-    id: 1,
-    nome: "Hambúrguer",
-    preco: 25,
-    descricao: "Artesanal com cheddar",
-    categoria: "Lanches",
-    imagemPrato: "./hamburguer.png",
-    alergenicos: "Glúten, Ovo",
-  },
-  {
-    id: 2,
-    nome: "X-Burguer",
-    preco: 20,
-    descricao: "Simples, rápido e gostoso",
-    categoria: "Lanches",
-    imagemPrato: "./xburguer.png",
-    alergenicos: "Glúten",
-  },
-  {
-    id: 3,
-    nome: "Suco Natural",
-    preco: 8,
-    descricao: "Laranja, limão ou abacaxi",
-    categoria: "Bebidas",
-    imagemPrato: "./suco.png",
-    alergenicos: "Soja",
-  },
-];
-
-export function Restaurant() {
-  const { restaurantName } = useParams();
+export function Home() {
   const [categoriaVisivel, setCategoriaVisivel] = useState("");
   const [searchMode, setSearchMode] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [pratos, setPratos] = useState([]);
+  const [loading, setLoading] = useState(true);
   const categoriasRefs = useRef({});
   const categoriasContainerRef = useRef(null);
 
+  useEffect(() => {
+    const carregarProdutos = async () => {
+      try {
+        const [pizzas, bebidas] = await Promise.all([
+          buscarPizzas(),
+          buscarBebidas(),
+        ]);
+        setPratos([...pizzas, ...bebidas]);
+      } catch (err) {
+        console.error("Erro ao carregar produtos:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    carregarProdutos();
+  }, []);
+
+  console.log("Pratos:", pratos);
   const handleCategoriaClick = (categoria) => {
     if (categoriasRefs.current[categoria]) {
       const offsetTop = categoriasRefs.current[categoria].offsetTop - 160;
@@ -79,7 +69,7 @@ export function Restaurant() {
   };
 
   const centralizarCategoria = (categoria) => {
-    const categoriaIndex = restaurant.categorias.findIndex(
+    const categoriaIndex = pizzaria.categorias.findIndex(
       (cat) => cat === categoria
     );
     if (categoriasContainerRef.current) {
@@ -131,7 +121,7 @@ export function Restaurant() {
       }
     );
 
-    if (restaurant && restaurant.categorias) {
+    if (pizzaria && pizzaria.categorias) {
       Object.values(categoriasRefs.current).forEach((ref) => {
         if (ref) observer.observe(ref);
       });
@@ -140,7 +130,7 @@ export function Restaurant() {
     return () => {
       observer.disconnect();
     };
-  }, [restaurant, searchQuery, filteredPratos]);
+  }, [pizzaria, searchQuery, filteredPratos]);
 
   return (
     <>
@@ -203,12 +193,12 @@ export function Restaurant() {
                 }}
               >
                 <Avatar
-                  src={restaurant.imagemURL}
-                  alt="Logo do restaurante"
+                  src={pizzaria.imagemURL}
+                  alt="Logo do pizzariae"
                   sx={{ width: 30, height: 30 }}
                 />
                 <Typography component="h1" align="left" color="text.white">
-                  {restaurant.nome}
+                  {pizzaria.nome}
                 </Typography>
               </Box>
               <IconButton onClick={handleSearchIconClick}>
@@ -240,7 +230,7 @@ export function Restaurant() {
         }}
       >
         {!searchQuery || filteredPratos.length > 0
-          ? restaurant.categorias.map((categoria, index) => (
+          ? pizzaria.categorias.map((categoria, index) => (
               <Box
                 key={categoria}
                 ref={(el) => (categoriasRefs.current[categoria] = el)}
@@ -273,14 +263,16 @@ export function Restaurant() {
       </Box>
 
       <Container sx={{ paddingTop: "180px", paddingBottom: "100px" }}>
-        {filteredPratos.length === 0 ? (
+        {loading ? (
+          <Loading />
+        ) : filteredPratos.length === 0 ? (
           <Box sx={{ padding: 2, textAlign: "center" }}>
             <Typography variant="h6" component="p">
               Nenhum resultado encontrado.
             </Typography>
           </Box>
         ) : (
-          restaurant.categorias.map((categoria) => (
+          pizzaria.categorias.map((categoria) => (
             <Box
               key={categoria}
               id={categoria}
@@ -301,7 +293,6 @@ export function Restaurant() {
                         descricao={prato.descricao}
                         preco={prato.preco}
                         imagemPrato={prato.imagemPrato}
-                        alergenicos={prato.alergenicos}
                       />
                     </Grid>
                   ))}
@@ -316,4 +307,4 @@ export function Restaurant() {
   );
 }
 
-export default Restaurant;
+export default Home;
