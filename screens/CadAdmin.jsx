@@ -12,6 +12,9 @@ import {
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Header from "../components/Header";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth, db } from "../src/firebaseConfig"; // ajuste o caminho conforme necessário
+import { doc, setDoc } from "firebase/firestore";
 
 const theme = createTheme();
 
@@ -27,6 +30,7 @@ export function CadAdmin() {
     event.preventDefault();
     setError("");
     setSuccess("");
+
     if (password !== confirmPassword) {
       setError("As senhas não coincidem");
       return;
@@ -40,17 +44,22 @@ export function CadAdmin() {
       );
       const user = userCredential.user;
 
-      // Criação do documento do admin no Firestore com setDoc
-      await setDoc(doc(db, "admins", user.uid), {
+      // Criação do documento na coleção USERS, não 'admins'
+      await setDoc(doc(db, "users", user.uid), {
         uid: user.uid,
         name: name,
         email: email,
-        idRest: "", // Inicialmente vazio
+        type: "admin",
+        idRest: "", // campo extra, se for usado
       });
 
       setSuccess("Cadastro realizado com sucesso!");
+      setName("");
+      setEmail("");
+      setPassword("");
+      setConfirmPassword("");
     } catch (error) {
-      setError(error.message);
+      setError("Erro no cadastro: " + error.message);
     }
   };
 

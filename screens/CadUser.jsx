@@ -10,57 +10,23 @@ import {
   Alert,
 } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Header from "../components/Header";
-import { useAuth } from "../context/AuthContext";
 
-import { useNavigate } from "react-router-dom";
+const theme = createTheme();
 
-export function Login() {
+export function CadUser() {
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
-  const navigate = useNavigate();
-  const { login, userType } = useAuth();
-  const [loading, setLoading] = useState(false);
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    setError("");
-    setLoading(true);
-
-    try {
-      await login(email, password);
-
-      // Aguarda tipo de usuário ser carregado no AuthContext (caso ainda não esteja pronto)
-      const interval = setInterval(() => {
-        if (userType) {
-          clearInterval(interval);
-          if (userType === "admin") {
-            navigate("/perfil-da-loja");
-          } else {
-            navigate("/");
-          }
-        }
-      }, 100);
-
-      // Timeout de segurança
-      setTimeout(() => {
-        clearInterval(interval);
-        if (!userType) {
-          setError("Erro ao obter tipo de usuário. Tente novamente.");
-        }
-        setLoading(false);
-      }, 3000);
-    } catch (error) {
-      setError("Falha no login: " + error.message);
-      setLoading(false);
-    }
-  };
+  const [success, setSuccess] = useState("");
 
   return (
     <>
       <CssBaseline />
-      <Header headerType="login" />
+      <Header headerType="cad-user" />
       <Box
         sx={{
           display: "flex",
@@ -83,15 +49,23 @@ export function Login() {
               <LockOutlinedIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
-              Faça Login para continuar
+              Cadastro de Cliente
             </Typography>
             {error && <Alert severity="error">{error}</Alert>}
-            <Box
-              component="form"
-              noValidate
-              sx={{ mt: 1 }}
-              onSubmit={handleSubmit}
-            >
+            {success && <Alert severity="success">{success}</Alert>}
+            <Box component="form" noValidate sx={{ mt: 1 }}>
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="name"
+                label="Nome"
+                name="name"
+                autoComplete="name"
+                autoFocus
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              />
               <TextField
                 margin="normal"
                 required
@@ -100,7 +74,6 @@ export function Login() {
                 label="E-mail"
                 name="email"
                 autoComplete="email"
-                autoFocus
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
@@ -116,13 +89,25 @@ export function Login() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                name="confirmPassword"
+                label="Confirmar Senha"
+                type="password"
+                id="confirmPassword"
+                autoComplete="current-password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+              />
               <Button
                 type="submit"
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
               >
-                Entrar
+                Cadastrar
               </Button>
             </Box>
           </Box>
@@ -132,4 +117,4 @@ export function Login() {
   );
 }
 
-export default Login;
+export default CadUser;
