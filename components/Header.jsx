@@ -75,7 +75,7 @@ function Header({ headerType }) {
             boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.2)",
           }}
         >
-          <Link to="/home">
+          <Link to="/">
             <IconButton>
               <ArrowBackIosIcon sx={{ color: "text.white" }} />
             </IconButton>
@@ -194,6 +194,30 @@ function Header({ headerType }) {
             sx={{ marginLeft: 1 }}
           >
             Cadastro Administrador
+          </Typography>
+        </Box>
+      );
+    } else if (headerType === "cad-user") {
+      return (
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "left",
+            alignItems: "center",
+            height: 64,
+            padding: 1,
+            backgroundColor: "primary.main",
+            width: "100%",
+            boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.2)",
+          }}
+        >
+          <Typography
+            component="h1"
+            align="left"
+            color="text.white"
+            sx={{ marginLeft: 1 }}
+          >
+            Cadastro de Cliente
           </Typography>
         </Box>
       );
