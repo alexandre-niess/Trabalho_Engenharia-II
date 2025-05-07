@@ -10,13 +10,8 @@ import {
   Alert,
 } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Header from "../components/Header";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth, db } from "../src/firebaseConfig"; // ajuste o caminho conforme necessário
-import { doc, setDoc } from "firebase/firestore";
-
-const theme = createTheme();
+import { cadastrarAdmin } from "../service/userService";
 
 export function CadAdmin() {
   const [name, setName] = useState("");
@@ -37,22 +32,7 @@ export function CadAdmin() {
     }
 
     try {
-      const userCredential = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-      const user = userCredential.user;
-
-      // Criação do documento na coleção USERS, não 'admins'
-      await setDoc(doc(db, "users", user.uid), {
-        uid: user.uid,
-        name: name,
-        email: email,
-        type: "admin",
-        idRest: "", // campo extra, se for usado
-      });
-
+      await cadastrarAdmin(name, email, password);
       setSuccess("Cadastro realizado com sucesso!");
       setName("");
       setEmail("");
@@ -103,11 +83,7 @@ export function CadAdmin() {
                 margin="normal"
                 required
                 fullWidth
-                id="name"
                 label="Nome"
-                name="name"
-                autoComplete="name"
-                autoFocus
                 value={name}
                 onChange={(e) => setName(e.target.value)}
               />
@@ -115,10 +91,7 @@ export function CadAdmin() {
                 margin="normal"
                 required
                 fullWidth
-                id="email"
                 label="E-mail"
-                name="email"
-                autoComplete="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
@@ -126,11 +99,8 @@ export function CadAdmin() {
                 margin="normal"
                 required
                 fullWidth
-                name="password"
                 label="Senha"
                 type="password"
-                id="password"
-                autoComplete="current-password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
@@ -138,11 +108,8 @@ export function CadAdmin() {
                 margin="normal"
                 required
                 fullWidth
-                name="confirmPassword"
                 label="Confirmar Senha"
                 type="password"
-                id="confirmPassword"
-                autoComplete="current-password"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
               />

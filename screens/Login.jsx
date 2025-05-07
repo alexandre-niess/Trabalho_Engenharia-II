@@ -22,6 +22,18 @@ export function Login() {
   const navigate = useNavigate();
   const { login, userType } = useAuth();
   const [loading, setLoading] = useState(false);
+  const [autenticado, setAutenticado] = useState(false);
+
+  React.useEffect(() => {
+    if (autenticado && userType) {
+      if (userType === "admin") {
+        navigate("/admin");
+      } else {
+        navigate("/carrinho");
+      }
+      setLoading(false);
+    }
+  }, [autenticado, userType, navigate]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -30,27 +42,7 @@ export function Login() {
 
     try {
       await login(email, password);
-
-      // Aguarda tipo de usuário ser carregado no AuthContext (caso ainda não esteja pronto)
-      const interval = setInterval(() => {
-        if (userType) {
-          clearInterval(interval);
-          if (userType === "admin") {
-            navigate("/perfil-da-loja");
-          } else {
-            navigate("/");
-          }
-        }
-      }, 100);
-
-      // Timeout de segurança
-      setTimeout(() => {
-        clearInterval(interval);
-        if (!userType) {
-          setError("Erro ao obter tipo de usuário. Tente novamente.");
-        }
-        setLoading(false);
-      }, 3000);
+      setAutenticado(true);
     } catch (error) {
       setError("Falha no login: " + error.message);
       setLoading(false);
