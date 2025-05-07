@@ -20,8 +20,8 @@ import Footer from "../components/Footer";
 import IsOpen from "/components/IsOpen.jsx";
 import Loading from "../components/Loading";
 import { buscarPizzas, buscarBebidas } from "../service/produtoService";
+import { Link } from "react-router-dom";
 
-// 🧪 Mock de pizzariae
 const pizzaria = {
   nome: "Pizzaria Matteo",
   imagemURL: "",
@@ -288,12 +288,19 @@ export function Home() {
                   .filter((prato) => prato.categoria === categoria)
                   .map((prato, index) => (
                     <Grid item xs={12} sm={6} md={4} key={index}>
-                      <CardProduto
-                        nome={prato.nome}
-                        descricao={prato.descricao}
-                        preco={prato.preco}
-                        imagemPrato={prato.imagemPrato}
-                      />
+                      <Link
+                        to={`/detalhe-produto/${encodeURIComponent(
+                          prato.categoria
+                        )}/${prato.id}`}
+                        style={{ textDecoration: "none" }}
+                      >
+                        <CardProduto
+                          nome={prato.nome}
+                          descricao={prato.descricao}
+                          preco={prato.preco}
+                          imagemPrato={prato.imagemPrato}
+                        />
+                      </Link>
                     </Grid>
                   ))}
               </Grid>

@@ -15,6 +15,7 @@ import { AuthProvider } from "../context/AuthContext.jsx";
 import UserPrivateRoute from "../components/UserPrivateRoute.jsx";
 import AdminPrivateRoute from "../components/AdminPrivateRoute.jsx";
 import Carrinho from "../screens/Carrinho.jsx";
+import DetalhesProduto from "../screens/DetalhesProduto.jsx";
 
 const temaRest = createTheme({
   palette: {
@@ -52,8 +53,18 @@ createRoot(document.getElementById("root")).render(
           <Route path="/" element={<Home />} />
           <Route path="/perfil-da-loja" element={<PerfilEmp />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/cadastro-admin" element={<CadAdmin />} />
           <Route path="/cadastro-user" element={<CadUser />} />
+          <Route path="*" element={<h1>Not Found</h1>} />
+
+          {/* Rotas privadas */}
+          <Route
+            path="/cadastro-admin"
+            element={
+              <AdminPrivateRoute>
+                <CadAdmin />
+              </AdminPrivateRoute>
+            }
+          />
           <Route
             path="/cadastro-restaurante"
             element={
@@ -86,8 +97,22 @@ createRoot(document.getElementById("root")).render(
               </AdminPrivateRoute>
             }
           />
-          <Route path="*" element={<h1>Not Found</h1>} />
-          <Route path="/carrinho" element={<Carrinho />} />
+          <Route
+            path="/carrinho"
+            element={
+              <UserPrivateRoute>
+                <Carrinho />
+              </UserPrivateRoute>
+            }
+          />
+          <Route
+            path="/detalhe-produto/:categoria/:id"
+            element={
+              <UserPrivateRoute>
+                <DetalhesProduto />
+              </UserPrivateRoute>
+            }
+          />
         </Routes>
       </BrowserRouter>
     </AuthProvider>
