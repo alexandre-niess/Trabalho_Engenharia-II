@@ -61,12 +61,15 @@ export const buscarPizzas = async () => {
 
   const data = await response.json();
 
-  const pizzas = data.map((item) => ({
+  // 💡 Aqui está o ajuste:
+  const arrayPizzas = data.$values || [];
+
+  const pizzas = arrayPizzas.map((item) => ({
     id: item.id,
     nome: item.sabor,
     preco: item.valor,
     descricao: item.descricao,
-    categoria: item.qntFatia === 1 ? "Pizzas Doces" : "Pizzas Salgadas",
+    categoria: item.qntfatia === 1 ? "Pizzas Doces" : "Pizzas Salgadas",
     imagemPrato: item.foto,
   }));
 
@@ -84,7 +87,9 @@ export const buscarBebidas = async () => {
 
   const data = await response.json();
 
-  const bebidas = data.map((item) => ({
+  const arrayBebidas = data.$values || [];
+
+  const bebidas = arrayBebidas.map((item) => ({
     id: item.id,
     nome: item.nome,
     preco: item.valor,
