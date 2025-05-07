@@ -24,7 +24,7 @@ import { Link } from "react-router-dom";
 
 const pizzaria = {
   nome: "Pizzaria Matteo",
-  imagemURL: "",
+  imagemURL: "./logo.png",
   categorias: ["Pizzas Salgadas", "Pizzas Doces", "Bebidas"],
 };
 
