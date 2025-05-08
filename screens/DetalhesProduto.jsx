@@ -12,12 +12,17 @@ import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import { useParams, useNavigate } from "react-router-dom";
-import { buscarPizzas, buscarBebidas } from "../service/produtoService";
+import { buscarPizzaPorId, buscarBebidaPorId } from "../service/produtoService";
+
+import {
+  adicionarPizzaAoCarrinho,
+  adicionarBebidaAoCarrinho,
+} from "../service/carrinhoService";
+import { getUidUsuarioLogado } from "../utils/getAuth";
 
 export function DetalhesProduto() {
   const { categoria, id } = useParams();
   const navigate = useNavigate();
-
   const [produto, setProduto] = useState(null);
   const [quantidade, setQuantidade] = useState(1);
   const [tamanhoSelecionado, setTamanhoSelecionado] = useState("média");
@@ -31,12 +36,10 @@ export function DetalhesProduto() {
     const carregarProduto = async () => {
       try {
         if (categoria === "Bebidas") {
-          const bebidas = await buscarBebidas();
-          const bebida = bebidas.find((item) => String(item.id) === id);
+          const bebida = await buscarBebidaPorId(id);
           setProduto(bebida);
         } else {
-          const pizzas = await buscarPizzas();
-          const pizza = pizzas.find((item) => String(item.id) === id);
+          const pizza = await buscarPizzaPorId(id);
           setProduto(pizza);
         }
       } catch (err) {
@@ -59,7 +62,43 @@ export function DetalhesProduto() {
     setQuantidade((prev) => prev + 1);
   };
 
+  const multiplicadores = {
+    pequena: 1.0,
+    média: 1.2,
+    grande: 1.5,
+  };
+
+  const handleAdicionar = async () => {
+    try {
+      const uid = await getUidUsuarioLogado();
+
+      if (categoria === "Bebidas") {
+        await adicionarBebidaAoCarrinho(uid, produto.id, quantidade);
+      } else {
+        await adicionarPizzaAoCarrinho(
+          uid,
+          produto.id,
+          quantidade,
+          tamanhoSelecionado
+        );
+      }
+
+      alert("Produto adicionado ao carrinho!");
+      navigate("/carrinho");
+    } catch (err) {
+      console.error("Erro ao adicionar produto:", err);
+      alert("Erro ao adicionar ao carrinho");
+    }
+  };
+
   if (!produto) return null;
+
+  const nomeProduto = categoria === "Bebidas" ? produto.nome : produto.sabor;
+  const precoBase = Number(produto.preco) || 0;
+  const multiplicadorSelecionado =
+    multiplicadores[tamanhoSelecionado?.toLowerCase()] ?? 1;
+  const precoFinal =
+    categoria === "Bebidas" ? precoBase : precoBase * multiplicadorSelecionado;
 
   return (
     <>
@@ -77,7 +116,7 @@ export function DetalhesProduto() {
         <Box sx={{ position: "relative", width: { xs: "100%", md: "50%" } }}>
           <img
             src={produto.imagemPrato}
-            alt={produto.nome}
+            alt={nomeProduto}
             style={{
               width: "100%",
               height: "100%",
@@ -120,11 +159,11 @@ export function DetalhesProduto() {
           )}
 
           <Typography variant="h5" fontWeight={500} gutterBottom>
-            {produto.nome}
+            {nomeProduto}
           </Typography>
 
           <Typography variant="h6" fontWeight={600} gutterBottom>
-            R${produto.preco.toFixed(2).replace(".", ",")}
+            R${precoFinal.toFixed(2).replace(".", ",")}
           </Typography>
 
           {produto.descricao && (
@@ -167,18 +206,11 @@ export function DetalhesProduto() {
                     }}
                     onClick={() => handleTamanhoClick(tam)}
                   >
-                    <Typography
-                      variant="caption"
-                      fontWeight={700}
-                      color={
-                        tamanhoSelecionado === tam ? "primary.dark" : "#555"
-                      }
-                      sx={{ textTransform: "uppercase" }}
-                    >
-                      {tam}
-                    </Typography>
                     <Typography variant="body1" fontWeight={600}>
-                      R${produto.preco.toFixed(2).replace(".", ",")}
+                      R$
+                      {(precoBase * (multiplicadores[tam.toLowerCase()] ?? 1))
+                        .toFixed(2)
+                        .replace(".", ",")}
                     </Typography>
                   </Box>
                 ))}
@@ -215,7 +247,11 @@ export function DetalhesProduto() {
               </IconButton>
             </Box>
 
-            <Button variant="contained" color="primary">
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleAdicionar}
+            >
               ADICIONAR
             </Button>
           </Box>

@@ -17,7 +17,7 @@ export const uploadImagem = async (file) => {
 export const cadastrarProduto = async (produto) => {
   let url = "";
   let params;
-
+  console.log(produto);
   if (produto.categoria === "Bebidas") {
     // Para bebidas: nome, valor, foto → rota diferente
     url = "http://localhost:5134/api/Bebida";
@@ -72,7 +72,7 @@ export const buscarPizzas = async () => {
     categoria: item.qntfatia === 1 ? "Pizzas Doces" : "Pizzas Salgadas",
     imagemPrato: item.foto,
   }));
-
+  console.log(pizzas);
   return pizzas;
 };
 
@@ -97,6 +97,44 @@ export const buscarBebidas = async () => {
     categoria: "Bebidas",
     imagemPrato: item.foto,
   }));
+  console.log(bebidas);
 
   return bebidas;
+};
+
+export const buscarPizzaPorId = async (id) => {
+  const response = await fetch(`http://localhost:5134/api/Pizza/${id}`);
+  if (!response.ok) {
+    throw new Error(`Erro ao buscar pizza de id ${id}`);
+  }
+
+  const item = await response.json();
+
+  return {
+    id: item.id,
+    nome: item.sabor,
+    preco: item.valor,
+    descricao: item.descricao,
+    ingredientes: item.ingredientes,
+    imagemPrato: item.foto,
+    categoria: item.qntfatia === 1 ? "Pizzas Doces" : "Pizzas Salgadas",
+  };
+};
+
+export const buscarBebidaPorId = async (id) => {
+  const response = await fetch(`http://localhost:5134/api/Bebida/${id}`);
+  if (!response.ok) {
+    throw new Error(`Erro ao buscar bebida de id ${id}`);
+  }
+
+  const item = await response.json();
+
+  return {
+    id: item.id,
+    nome: item.nome,
+    preco: item.valor,
+    descricao: "", // bebidas não têm descrição
+    imagemPrato: item.foto,
+    categoria: "Bebidas",
+  };
 };
