@@ -173,6 +173,31 @@ function Header({ headerType }) {
           </Typography>
         </Box>
       );
+    } else if (headerType === "carrinho") {
+      return (
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "left",
+
+            alignItems: "center",
+            height: 64,
+            padding: 1,
+            backgroundColor: "primary.main",
+            width: "100%",
+            boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.2)",
+          }}
+        >
+          <Typography
+            component="h1"
+            align="left"
+            color="text.white"
+            sx={{ marginLeft: 1 }}
+          >
+            Carrinho
+          </Typography>
+        </Box>
+      );
     } else if (headerType === "cad-admin") {
       return (
         <Box

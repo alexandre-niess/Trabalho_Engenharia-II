@@ -7,7 +7,6 @@ import CadProduto from "../screens/CadProduto.jsx";
 import { Login } from "../screens/Login.jsx";
 import { CadAdmin } from "../screens/CadAdmin.jsx";
 import { CadUser } from "../screens/CadUser.jsx";
-import CadRestaurante from "../screens/CadRestaurante/CadRestaurante.jsx";
 import EditPrato from "../screens/EditPrato.jsx";
 import Home from "../screens/Home.jsx";
 import Admin from "../screens/admin/Admin.jsx";
@@ -62,14 +61,6 @@ createRoot(document.getElementById("root")).render(
             element={
               <AdminPrivateRoute>
                 <CadAdmin />
-              </AdminPrivateRoute>
-            }
-          />
-          <Route
-            path="/cadastro-restaurante"
-            element={
-              <AdminPrivateRoute>
-                <CadRestaurante />
               </AdminPrivateRoute>
             }
           />
