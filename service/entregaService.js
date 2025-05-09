@@ -1,12 +1,15 @@
 export const calcularPrecoEntregaViaBackend = async (dropoff) => {
   try {
-    const response = await fetch("http://localhost:5134/api/Entrega/cotacao", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(dropoff),
-    });
+    const response = await fetch(
+      "https://pizzariamatteo.onrender.com/api/Entrega/cotacao",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(dropoff),
+      }
+    );
 
     if (!response.ok) {
       throw new Error("Erro ao obter cotação da entrega pelo backend");

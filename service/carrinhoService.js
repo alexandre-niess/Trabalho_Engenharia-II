@@ -3,7 +3,7 @@ import { getUidUsuarioLogado } from "../utils/getAuth";
 export const buscarCarrinho = async (idUsuario) => {
   try {
     const response = await fetch(
-      `http://localhost:5134/api/Carrinho/${idUsuario}`
+      `https://pizzariamatteo.onrender.com/api/Carrinho/${idUsuario}`
     );
 
     let carrinho;
@@ -15,7 +15,7 @@ export const buscarCarrinho = async (idUsuario) => {
         // Carrinho vazio → cria novo
         console.warn("Carrinho vazio. Criando novo...");
         const createResponse = await fetch(
-          `http://localhost:5134/api/Carrinho/create-carrinho?idUsuario=${idUsuario}`,
+          `https://pizzariamatteo.onrender.com/api/Carrinho/create-carrinho?idUsuario=${idUsuario}`,
           { method: "POST" }
         );
 
@@ -30,7 +30,7 @@ export const buscarCarrinho = async (idUsuario) => {
     } else if (response.status === 404) {
       console.warn("Carrinho não encontrado. Criando novo...");
       const createResponse = await fetch(
-        `http://localhost:5134/api/Carrinho/create-carrinho?idUsuario=${idUsuario}`,
+        `https://pizzariamatteo.onrender.com/api/Carrinho/create-carrinho?idUsuario=${idUsuario}`,
         { method: "POST" }
       );
 
@@ -97,7 +97,7 @@ export const buscarCarrinho = async (idUsuario) => {
 export const removerPizzaDoCarrinho = async (carrinhoid, pizzaid) => {
   try {
     const response = await fetch(
-      `http://localhost:5134/api/Carrinho/remove-pizza?carrinhoid=${carrinhoid}&pizzaid=${pizzaid}`,
+      `https://pizzariamatteo.onrender.com/api/Carrinho/remove-pizza?carrinhoid=${carrinhoid}&pizzaid=${pizzaid}`,
       {
         method: "DELETE",
       }
@@ -114,7 +114,7 @@ export const removerPizzaDoCarrinho = async (carrinhoid, pizzaid) => {
 export const removerBebidaDoCarrinho = async (carrinhoid, bebidaid) => {
   try {
     const response = await fetch(
-      `http://localhost:5134/api/Carrinho/remove-bebida?carrinhoid=${carrinhoid}&bebidaid=${bebidaid}`,
+      `https://pizzariamatteo.onrender.com/api/Carrinho/remove-bebida?carrinhoid=${carrinhoid}&bebidaid=${bebidaid}`,
       {
         method: "DELETE",
       }
@@ -135,7 +135,7 @@ export const atualizarQuantidadeBebida = async (
 ) => {
   try {
     const response = await fetch(
-      `http://localhost:5134/api/Carrinho/update-bebida?carrinhoid=${carrinhoid}&bebidaid=${bebidaid}&novaQuantidade=${novaQuantidade}`,
+      `https://pizzariamatteo.onrender.com/api/Carrinho/update-bebida?carrinhoid=${carrinhoid}&bebidaid=${bebidaid}&novaQuantidade=${novaQuantidade}`,
       {
         method: "PUT",
       }
@@ -156,7 +156,7 @@ export const atualizarQuantidadePizza = async (
 ) => {
   try {
     const response = await fetch(
-      `http://localhost:5134/api/Carrinho/update-pizza?carrinhoid=${carrinhoid}&pizzaid=${pizzaid}&novaQuantidade=${novaQuantidade}`,
+      `https://pizzariamatteo.onrender.com/api/Carrinho/update-pizza?carrinhoid=${carrinhoid}&pizzaid=${pizzaid}&novaQuantidade=${novaQuantidade}`,
       {
         method: "PUT",
       }
@@ -185,7 +185,7 @@ export const adicionarPizzaAoCarrinho = async (
 ) => {
   try {
     const response = await fetch(
-      `http://localhost:5134/api/Carrinho/add-pizza?carrinhoid=${carrinhoid}&pizzaid=${pizzaid}&quantidade=${quantidade}&tamanho=${tamanho}`,
+      `https://pizzariamatteo.onrender.com/api/Carrinho/add-pizza?carrinhoid=${carrinhoid}&pizzaid=${pizzaid}&quantidade=${quantidade}&tamanho=${tamanho}`,
       {
         method: "POST",
       }
@@ -213,7 +213,7 @@ export const adicionarBebidaAoCarrinho = async (
 ) => {
   try {
     const response = await fetch(
-      `http://localhost:5134/api/Carrinho/add-bebida?carrinhoid=${carrinhoid}&bebidaid=${bebidaid}&quantidade=${quantidade}`,
+      `https://pizzariamatteo.onrender.com/api/Carrinho/add-bebida?carrinhoid=${carrinhoid}&bebidaid=${bebidaid}&quantidade=${quantidade}`,
       {
         method: "POST",
       }
@@ -232,9 +232,12 @@ export const deletarCarrinhoDoUsuario = async () => {
   try {
     const uid = await getUidUsuarioLogado();
 
-    const response = await fetch(`http://localhost:5134/api/Carrinho/${uid}`, {
-      method: "DELETE",
-    });
+    const response = await fetch(
+      `https://pizzariamatteo.onrender.com/api/Carrinho/${uid}`,
+      {
+        method: "DELETE",
+      }
+    );
 
     if (!response.ok) {
       throw new Error("Erro ao deletar o carrinho");

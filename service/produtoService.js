@@ -20,7 +20,7 @@ export const cadastrarProduto = async (produto) => {
   console.log(produto);
   if (produto.categoria === "Bebidas") {
     // Para bebidas: nome, valor, foto → rota diferente
-    url = "http://localhost:5134/api/Bebida";
+    url = "https://pizzariamatteo.onrender.com/api/Bebida";
     params = new URLSearchParams({
       nome: produto.nome,
       valor: produto.preco,
@@ -29,7 +29,7 @@ export const cadastrarProduto = async (produto) => {
   } else {
     const qntFatia = produto.categoria === "Pizzas Salgadas" ? 0 : 1;
     console.log(qntFatia);
-    url = "http://localhost:5134/api/Pizza";
+    url = "https://pizzariamatteo.onrender.com/api/Pizza";
     params = new URLSearchParams({
       sabor: produto.nome,
       qntFatia: qntFatia.toString(),
@@ -54,7 +54,7 @@ export const cadastrarProduto = async (produto) => {
  * Busca todas as pizzas e formata os dados
  */
 export const buscarPizzas = async () => {
-  const response = await fetch("http://localhost:5134/api/Pizza");
+  const response = await fetch("https://pizzariamatteo.onrender.com/api/Pizza");
   if (!response.ok) {
     throw new Error("Erro ao buscar pizzas");
   }
@@ -80,7 +80,9 @@ export const buscarPizzas = async () => {
  * Busca todas as bebidas e formata os dados
  */
 export const buscarBebidas = async () => {
-  const response = await fetch("http://localhost:5134/api/Bebida");
+  const response = await fetch(
+    "https://pizzariamatteo.onrender.com/api/Bebida"
+  );
   if (!response.ok) {
     throw new Error("Erro ao buscar bebidas");
   }
@@ -103,7 +105,9 @@ export const buscarBebidas = async () => {
 };
 
 export const buscarPizzaPorId = async (id) => {
-  const response = await fetch(`http://localhost:5134/api/Pizza/${id}`);
+  const response = await fetch(
+    `https://pizzariamatteo.onrender.com/api/Pizza/${id}`
+  );
   if (!response.ok) {
     throw new Error(`Erro ao buscar pizza de id ${id}`);
   }
@@ -122,7 +126,9 @@ export const buscarPizzaPorId = async (id) => {
 };
 
 export const buscarBebidaPorId = async (id) => {
-  const response = await fetch(`http://localhost:5134/api/Bebida/${id}`);
+  const response = await fetch(
+    `https://pizzariamatteo.onrender.com/api/Bebida/${id}`
+  );
   if (!response.ok) {
     throw new Error(`Erro ao buscar bebida de id ${id}`);
   }

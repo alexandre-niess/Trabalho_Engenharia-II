@@ -6,7 +6,7 @@ import { buscarCarrinho } from "./carrinhoService";
 export const criarIntencaoPagamento = async (valorEmCentavos) => {
   try {
     const response = await fetch(
-      "http://localhost:5134/api/Pagamento/criar-intencao",
+      "https://pizzariamatteo.onrender.com/api/Pagamento/criar-intencao",
       {
         method: "POST",
         headers: {
