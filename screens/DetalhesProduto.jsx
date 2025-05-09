@@ -13,6 +13,10 @@ import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import { useParams, useNavigate } from "react-router-dom";
 import { buscarPizzaPorId, buscarBebidaPorId } from "../service/produtoService";
+import Dialog from "@mui/material/Dialog";
+import DialogTitle from "@mui/material/DialogTitle";
+import DialogContent from "@mui/material/DialogContent";
+import DialogActions from "@mui/material/DialogActions";
 
 import {
   adicionarPizzaAoCarrinho,
@@ -26,6 +30,8 @@ export function DetalhesProduto() {
   const [produto, setProduto] = useState(null);
   const [quantidade, setQuantidade] = useState(1);
   const [tamanhoSelecionado, setTamanhoSelecionado] = useState("média");
+  const [modalSucesso, setModalSucesso] = useState(false);
+  const [modalErro, setModalErro] = useState(false);
 
   const tamanhos = ["pequena", "média", "grande"];
 
@@ -83,11 +89,10 @@ export function DetalhesProduto() {
         );
       }
 
-      alert("Produto adicionado ao carrinho!");
-      navigate("/carrinho");
+      setModalSucesso(true); // exibe modal de sucesso
     } catch (err) {
       console.error("Erro ao adicionar produto:", err);
-      alert("Erro ao adicionar ao carrinho");
+      setModalErro(true); // exibe modal de erro
     }
   };
 
@@ -103,6 +108,42 @@ export function DetalhesProduto() {
   return (
     <>
       <CssBaseline />
+      {/* Modal de Sucesso */}
+      <Dialog open={modalSucesso} onClose={() => {}} disableEscapeKeyDown>
+        <DialogTitle>Produto adicionado!</DialogTitle>
+        <DialogContent>
+          <Typography>
+            O item foi adicionado ao carrinho com sucesso.
+          </Typography>
+        </DialogContent>
+        <DialogActions>
+          <Button
+            onClick={() => {
+              setModalSucesso(false);
+              navigate("/carrinho");
+            }}
+            variant="contained"
+          >
+            Ir para o carrinho
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+      {/* Modal de Erro */}
+      <Dialog open={modalErro} onClose={() => setModalErro(false)}>
+        <DialogTitle>Produto já adicionado</DialogTitle>
+        <DialogContent>
+          <Typography>
+            Este item já está no carrinho. Você pode atualizar a quantidade por
+            lá.
+          </Typography>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setModalErro(false)} variant="outlined">
+            Fechar
+          </Button>
+        </DialogActions>
+      </Dialog>
 
       <Box
         sx={{

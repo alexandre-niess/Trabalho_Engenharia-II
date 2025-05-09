@@ -8,14 +8,14 @@ import CreditCardIcon from "@mui/icons-material/CreditCard";
 import PaymentsIcon from "@mui/icons-material/Payments";
 
 const MOCK_RESTAURANT = {
-  nome: "dona-dika",
-  imagemURL: "",
-  logradouro: "Rua das Acácias",
-  numero: "123",
-  bairro: "Centro",
+  nome: "Pizzaria Matteo",
+  imagemURL: "./logo.png",
+  logradouro: "Rua Dom José Gaspar",
+  numero: "500",
+  bairro: "Coração Eucarístico",
   cidade: "Belo Horizonte",
   estado: "MG",
-  cep: "30140-110",
+  cep: "30535-901",
   horarios: [
     "segunda: 08:00 às 18:00",
     "terca: 08:00 às 18:00",
@@ -30,7 +30,7 @@ const MOCK_RESTAURANT = {
   cartoes: ["Visa", "Mastercard", "Elo"],
 };
 
-export function PerfilEmp() {
+export function DadosPizzaria() {
   const restaurant = MOCK_RESTAURANT;
 
   const {
@@ -162,4 +162,4 @@ function Section({ title, children }) {
   );
 }
 
-export default PerfilEmp;
+export default DadosPizzaria;

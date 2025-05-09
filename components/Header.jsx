@@ -85,7 +85,7 @@ function Header({ headerType }) {
             color="text.white"
             sx={{ marginLeft: 1 }}
           >
-            Perfil do Restaurante
+            Perfil da Pizzaria
           </Typography>
         </Box>
       );

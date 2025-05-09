@@ -234,32 +234,34 @@ export function Carrinho() {
           })
         )}
 
-        <Box
-          sx={{
-            position: "fixed",
-            bottom: 80,
-            left: 0,
-            width: "100%",
-            backgroundColor: "#fff",
-            borderTop: "1px solid #e0e0e0",
-            boxShadow: "0 -2px 10px rgba(0,0,0,0.05)",
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            px: 4,
-            py: 2,
-            zIndex: 999,
-          }}
-        >
-          <Typography sx={{ fontSize: "18px", fontWeight: 600 }}>
-            Subtotal: R${subtotal.toFixed(2).replace(".", ",")}
-          </Typography>
-          <Link to="/entrega">
-            <Button variant="contained" color="primary">
-              Ir para a entrega
-            </Button>
-          </Link>
-        </Box>
+        {itens.length > 0 && (
+          <Box
+            sx={{
+              position: "fixed",
+              bottom: 80,
+              left: 0,
+              width: "100%",
+              backgroundColor: "#fff",
+              borderTop: "1px solid #e0e0e0",
+              boxShadow: "0 -2px 10px rgba(0,0,0,0.05)",
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              px: 4,
+              py: 2,
+              zIndex: 999,
+            }}
+          >
+            <Typography sx={{ fontSize: "18px", fontWeight: 600 }}>
+              Subtotal: R${subtotal.toFixed(2).replace(".", ",")}
+            </Typography>
+            <Link to="/entrega">
+              <Button variant="contained" color="primary">
+                Ir para a entrega
+              </Button>
+            </Link>
+          </Box>
+        )}
       </Box>
       <Footer />
     </>
