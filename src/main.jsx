@@ -58,7 +58,14 @@ createRoot(document.getElementById("root")).render(
           <Route path="*" element={<h1>Not Found</h1>} />
 
           {/* Rotas privadas */}
-          <Route path="/cadastro-admin" element={<CadAdmin />} />
+          <Route
+            path="/cadastro-admin"
+            element={
+              <AdminPrivateRoute>
+                <CadAdmin />
+              </AdminPrivateRoute>
+            }
+          />
           <Route
             path="/admin"
             element={
