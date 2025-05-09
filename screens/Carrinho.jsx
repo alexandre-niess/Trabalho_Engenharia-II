@@ -8,7 +8,7 @@ import Card from "@mui/material/Card";
 import IconButton from "@mui/material/IconButton";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
-
+import { Link } from "react-router-dom";
 import {
   buscarCarrinho,
   removerPizzaDoCarrinho,
@@ -17,6 +17,7 @@ import {
   atualizarQuantidadeBebida,
 } from "../service/carrinhoService";
 import { getUidUsuarioLogado } from "../utils/getAuth";
+import { Button } from "@mui/material";
 
 export function Carrinho() {
   const [itens, setItens] = React.useState([]);
@@ -44,6 +45,8 @@ export function Carrinho() {
 
     carregarCarrinho();
   }, []);
+
+  const subtotal = itens.reduce((acc, item) => acc + item.precoTotal, 0);
 
   const handleAlterarQuantidade = async (id, tipo, operacao) => {
     const key = `${id}-${tipo}`;
@@ -230,6 +233,33 @@ export function Carrinho() {
             );
           })
         )}
+
+        <Box
+          sx={{
+            position: "fixed",
+            bottom: 80,
+            left: 0,
+            width: "100%",
+            backgroundColor: "#fff",
+            borderTop: "1px solid #e0e0e0",
+            boxShadow: "0 -2px 10px rgba(0,0,0,0.05)",
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            px: 4,
+            py: 2,
+            zIndex: 999,
+          }}
+        >
+          <Typography sx={{ fontSize: "18px", fontWeight: 600 }}>
+            Subtotal: R${subtotal.toFixed(2).replace(".", ",")}
+          </Typography>
+          <Link to="/entrega">
+            <Button variant="contained" color="primary">
+              Ir para a entrega
+            </Button>
+          </Link>
+        </Box>
       </Box>
       <Footer />
     </>

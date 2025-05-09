@@ -3,10 +3,9 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import { IconButton } from "@mui/material";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
-import { Link } from "react-router-dom";
 import { Avatar } from "@mui/material"; // Importar Avatar para exibir a foto de perfil
-import { useContext } from "react";
-
+import { Link } from "react-router-dom";
+import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import Button from "@mui/material/Button";
 import Loading from "./Loading";
 
@@ -179,7 +178,6 @@ function Header({ headerType }) {
           sx={{
             display: "flex",
             justifyContent: "left",
-
             alignItems: "center",
             height: 64,
             padding: 1,
@@ -197,6 +195,104 @@ function Header({ headerType }) {
             Carrinho
           </Typography>
         </Box>
+      );
+    } else if (headerType === "entrega") {
+      return (
+        <>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "left",
+              alignItems: "center",
+              height: 64,
+              padding: 1,
+              mb: "10px",
+              backgroundColor: "primary.main",
+              width: "100%",
+              boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.2)",
+            }}
+          >
+            <Typography
+              component="h1"
+              align="left"
+              color="text.white"
+              sx={{ marginLeft: 1 }}
+            >
+              Entrega
+            </Typography>
+          </Box>
+          <Link
+            to={-1}
+            style={{
+              textDecoration: "none",
+
+              display: "flex",
+              alignItems: "center",
+              padding: "12px 16px",
+              backgroundColor: "#fff",
+              width: "fit-content",
+            }}
+          >
+            <ArrowBackIosNewIcon
+              style={{ marginRight: "4px", color: "#DC4338", height: "18px" }}
+            />
+            <Typography
+              variant="body1"
+              sx={{ fontWeight: 500, color: "primary.main" }}
+            >
+              Voltar
+            </Typography>
+          </Link>
+        </>
+      );
+    } else if (headerType === "pagamento") {
+      return (
+        <>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "left",
+              alignItems: "center",
+              height: 64,
+              padding: 1,
+              mb: "10px",
+              backgroundColor: "primary.main",
+              width: "100%",
+              boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.2)",
+            }}
+          >
+            <Typography
+              component="h1"
+              align="left"
+              color="text.white"
+              sx={{ marginLeft: 1 }}
+            >
+              Pagamento
+            </Typography>
+          </Box>
+          <Link
+            to={-1}
+            style={{
+              textDecoration: "none",
+
+              display: "flex",
+              alignItems: "center",
+              padding: "12px 16px",
+              backgroundColor: "#fff",
+              width: "fit-content",
+            }}
+          >
+            <ArrowBackIosNewIcon
+              style={{ marginRight: "4px", color: "#DC4338", height: "18px" }}
+            />
+            <Typography
+              variant="body1"
+              sx={{ fontWeight: 500, color: "primary.main" }}
+            >
+              Voltar
+            </Typography>
+          </Link>
+        </>
       );
     } else if (headerType === "cad-admin") {
       return (
