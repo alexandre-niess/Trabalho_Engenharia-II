@@ -27,8 +27,8 @@ export const cadastrarProduto = async (produto) => {
       foto: produto.foto,
     });
   } else {
-    // Para pizzas: sabor, qntFatia, valor, descricao, ingredientes, foto
-    const qntFatia = produto.categoria === "Pizzas Salgadas" ? 1 : 0;
+    const qntFatia = produto.categoria === "Pizzas Salgadas" ? 0 : 1;
+    console.log(qntFatia);
     url = "http://localhost:5134/api/Pizza";
     params = new URLSearchParams({
       sabor: produto.nome,
