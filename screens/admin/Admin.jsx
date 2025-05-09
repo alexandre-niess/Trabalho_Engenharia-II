@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Typography,
@@ -10,60 +10,64 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  TextField,
   IconButton,
   Divider,
-  MenuItem,
-  Select,
-  FormControl,
-  InputLabel,
   CssBaseline,
+  TablePagination,
 } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
-import FilterListIcon from "@mui/icons-material/FilterList";
+import DeleteIcon from "@mui/icons-material/Delete";
+import { Link as RouterLink } from "react-router-dom";
+import { buscarPizzas, buscarBebidas } from "../../service/produtoService";
 
 const Admin = () => {
-  const produtos = [
-    {
-      nome: "Bife Ancho",
-      descricao: "Bife ancho grelhado no ponto perfeito.",
-      alergenos: "Glúten",
-      preco: 50.0,
-    },
-    {
-      nome: "Coca-Cola Lata",
-      descricao: "Coca-Cola gelada em lata 350ml.",
-      alergenos: "Glúten,Soja",
-      preco: 5.0,
-    },
-    {
-      nome: "Fanta Laranja",
-      descricao: "Fanta laranja gelada - 350ml",
-      alergenos: "Açúcar",
-      preco: 5.0,
-    },
-    {
-      nome: "Frango à Parmegiana",
-      descricao: "Frango empanado com molho de tomate e queijo.",
-      alergenos: "Glúten,Lactose",
-      preco: 32.0,
-    },
-    {
-      nome: "Guaraná Antarctica",
-      descricao: "Guaraná Antarctica gelado 350ml.",
-      alergenos: "",
-      preco: 5.0,
-    },
-  ];
+  const [produtos, setProdutos] = useState([]);
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
+
+  useEffect(() => {
+    const carregarProdutos = async () => {
+      try {
+        const pizzas = await buscarPizzas();
+        const bebidas = await buscarBebidas();
+
+        const todas = [
+          ...pizzas.map((p) => ({
+            nome: p.nome,
+            descricao: p.descricao,
+            categoria: p.categoria,
+            preco: p.preco,
+          })),
+          ...bebidas.map((b) => ({
+            nome: b.nome,
+            descricao: b.descricao,
+            categoria: b.categoria,
+            preco: b.preco,
+          })),
+        ];
+
+        setProdutos(todas);
+      } catch (err) {
+        console.error("Erro ao buscar produtos:", err);
+      }
+    };
+
+    carregarProdutos();
+  }, []);
+
+  const handleChangePage = (event, newPage) => setPage(newPage);
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(+event.target.value);
+    setPage(0);
+  };
 
   return (
     <>
       <CssBaseline />
       <Box sx={{ bgcolor: "#f9f9f9", minHeight: "100vh" }}>
-        {/* Header - será substituído por componente próprio */}
         <Box
           sx={{
-            bgcolor: "#263238",
+            bgcolor: "primary.main",
             color: "#fff",
             p: 2,
             display: "flex",
@@ -72,34 +76,19 @@ const Admin = () => {
           }}
         >
           <Typography variant="h6">
-            Painel do Admin - RestauranteLinkado
+            Painel do Admin - Pizzaria Matteo
           </Typography>
-          <Button variant="outlined" color="inherit">
+          <Button
+            variant="outlined"
+            color="inherit"
+            component={RouterLink}
+            to="/"
+          >
             VER SITE
           </Button>
         </Box>
 
-        {/* Conteúdo principal */}
         <Box sx={{ maxWidth: "90%", mx: "auto", mt: 4 }}>
-          {/* Bloco de Informações */}
-          <Paper elevation={1} sx={{ p: 2, mb: 4 }}>
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-              }}
-            >
-              <Typography variant="subtitle1" fontWeight={600}>
-                Informações do Restaurante
-              </Typography>
-              <Button variant="contained" color="inherit">
-                EDITAR INFORMAÇÕES
-              </Button>
-            </Box>
-          </Paper>
-
-          {/* Bloco de Produtos */}
           <Paper elevation={1}>
             <Box
               sx={{
@@ -115,22 +104,6 @@ const Admin = () => {
 
             <Divider />
 
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                p: 2,
-                flexWrap: "wrap",
-                gap: 2,
-              }}
-            >
-              <TextField size="small" label="Pesquisar pelo Nome" />
-              <IconButton>
-                <FilterListIcon />
-              </IconButton>
-            </Box>
-
             <TableContainer>
               <Table>
                 <TableHead>
@@ -142,7 +115,7 @@ const Admin = () => {
                       <b>Descrição</b>
                     </TableCell>
                     <TableCell>
-                      <b>Alérgenos</b>
+                      <b>Categoria</b>
                     </TableCell>
                     <TableCell>
                       <b>Preço</b>
@@ -153,41 +126,37 @@ const Admin = () => {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {produtos.map((produto, index) => (
-                    <TableRow key={index}>
-                      <TableCell>{produto.nome}</TableCell>
-                      <TableCell>{produto.descricao}</TableCell>
-                      <TableCell>{produto.alergenos}</TableCell>
-                      <TableCell>{produto.preco.toFixed(2)}</TableCell>
-                      <TableCell align="center">
-                        <IconButton size="small">
-                          <EditIcon />
-                        </IconButton>
-                      </TableCell>
-                    </TableRow>
-                  ))}
+                  {produtos
+                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    .map((produto, index) => (
+                      <TableRow key={index}>
+                        <TableCell>{produto.nome}</TableCell>
+                        <TableCell>{produto.descricao}</TableCell>
+                        <TableCell>{produto.categoria}</TableCell>
+                        <TableCell>R${produto.preco.toFixed(2)}</TableCell>
+                        <TableCell align="center">
+                          <IconButton size="small">
+                            <EditIcon />
+                          </IconButton>
+                          <IconButton size="small">
+                            <DeleteIcon />
+                          </IconButton>
+                        </TableCell>
+                      </TableRow>
+                    ))}
                 </TableBody>
               </Table>
             </TableContainer>
 
-            {/* Paginação Simples */}
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                p: 2,
-              }}
-            >
-              <FormControl size="small">
-                <InputLabel>Linhas por página</InputLabel>
-                <Select defaultValue={5} label="Linhas por página">
-                  <MenuItem value={5}>5</MenuItem>
-                  <MenuItem value={10}>10</MenuItem>
-                </Select>
-              </FormControl>
-              <Typography variant="body2">1–5 de 24</Typography>
-            </Box>
+            <TablePagination
+              component="div"
+              count={produtos.length}
+              page={page}
+              onPageChange={handleChangePage}
+              rowsPerPage={rowsPerPage}
+              onRowsPerPageChange={handleChangeRowsPerPage}
+              rowsPerPageOptions={[5, 10, 25]}
+            />
           </Paper>
         </Box>
       </Box>
