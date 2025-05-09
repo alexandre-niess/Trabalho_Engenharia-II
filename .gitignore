@@ -28,6 +28,7 @@ firebaseConfig.js
 firebase.json
 .firebaserc
 
+.env
 
 
 

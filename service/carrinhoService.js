@@ -1,3 +1,5 @@
+import { getUidUsuarioLogado } from "../utils/getAuth";
+
 export const buscarCarrinho = async (idUsuario) => {
   try {
     const response = await fetch(
@@ -223,5 +225,24 @@ export const adicionarBebidaAoCarrinho = async (
   } catch (err) {
     console.error("Erro:", err);
     throw err;
+  }
+};
+
+export const deletarCarrinhoDoUsuario = async () => {
+  try {
+    const uid = await getUidUsuarioLogado();
+
+    const response = await fetch(`http://localhost:5134/api/Carrinho/${uid}`, {
+      method: "DELETE",
+    });
+
+    if (!response.ok) {
+      throw new Error("Erro ao deletar o carrinho");
+    }
+
+    console.log("Carrinho removido com sucesso.");
+  } catch (error) {
+    console.error("Erro ao deletar carrinho:", error);
+    throw error;
   }
 };

@@ -2,7 +2,7 @@ import React from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
-import PerfilEmp from "../screens/PerfilEmp.jsx";
+import DadosPizzaria from "../screens/DadosPizzaria.jsx";
 import CadProduto from "../screens/CadProduto.jsx";
 import { Login } from "../screens/Login.jsx";
 import { CadAdmin } from "../screens/CadAdmin.jsx";
@@ -17,6 +17,8 @@ import Carrinho from "../screens/Carrinho.jsx";
 import DetalhesProduto from "../screens/DetalhesProduto.jsx";
 import Entrega from "../screens/Entrega.jsx";
 import Pagamento from "../screens/Pagamento.jsx";
+import { loadStripe } from "@stripe/stripe-js";
+import { Elements } from "@stripe/react-stripe-js";
 
 const temaRest = createTheme({
   palette: {
@@ -46,13 +48,15 @@ const temaRest = createTheme({
   },
 });
 
+const stripePromise = loadStripe(import.meta.env.VITE_PUBLIC_KEY);
+
 createRoot(document.getElementById("root")).render(
   <ThemeProvider theme={temaRest}>
     <AuthProvider>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/perfil-da-loja" element={<PerfilEmp />} />
+          <Route path="/perfil-da-loja" element={<DadosPizzaria />} />
           <Route path="/login" element={<Login />} />
           <Route path="/cadastro-user" element={<CadUser />} />
           <Route path="*" element={<h1>Not Found</h1>} />
@@ -118,7 +122,9 @@ createRoot(document.getElementById("root")).render(
             path="/pagamento"
             element={
               <UserPrivateRoute>
-                <Pagamento />
+                <Elements stripe={stripePromise}>
+                  <Pagamento />
+                </Elements>
               </UserPrivateRoute>
             }
           />
