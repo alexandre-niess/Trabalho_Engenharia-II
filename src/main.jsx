@@ -7,9 +7,9 @@ import CadProduto from "../screens/CadProduto.jsx";
 import { Login } from "../screens/Login.jsx";
 import { CadAdmin } from "../screens/CadAdmin.jsx";
 import { CadUser } from "../screens/CadUser.jsx";
-import EditPrato from "../screens/EditPrato.jsx";
+import EditProduto from "../screens/EditProduto.jsx";
 import Home from "../screens/Home.jsx";
-import Admin from "../screens/admin/Admin.jsx";
+import Admin from "../screens/Admin.jsx";
 import { AuthProvider } from "../context/AuthContext.jsx";
 import UserPrivateRoute from "../components/UserPrivateRoute.jsx";
 import AdminPrivateRoute from "../components/AdminPrivateRoute.jsx";
@@ -87,10 +87,10 @@ createRoot(document.getElementById("root")).render(
             }
           />
           <Route
-            path="/edit-prato"
+            path="/edit-produto/:categoria/:id"
             element={
               <AdminPrivateRoute>
-                <EditPrato />
+                <EditProduto />
               </AdminPrivateRoute>
             }
           />

@@ -144,3 +144,74 @@ export const buscarBebidaPorId = async (id) => {
     categoria: "Bebidas",
   };
 };
+
+/**
+ * Deleta um produto (pizza ou bebida) com base no ID e categoria
+ * @param {number|string} id - ID do produto
+ * @param {string} categoria - "Bebidas" ou outro valor para pizza
+ */
+export const deletarProduto = async (id, categoria) => {
+  const baseUrl = "https://pizzariamatteo.onrender.com/api";
+  const endpoint = categoria === "Bebidas" ? "Bebida" : "Pizza";
+  const url = `${baseUrl}/${endpoint}/${id}`;
+
+  const response = await fetch(url, {
+    method: "DELETE",
+  });
+
+  if (!response.ok) {
+    throw new Error(
+      `Erro ao deletar ${
+        categoria === "Bebidas" ? "bebida" : "pizza"
+      } com id ${id}`
+    );
+  }
+
+  return true;
+};
+
+/**
+ * Edita um produto existente (Pizza ou Bebida)
+ * @param {Object} produto - Objeto com os dados do produto
+ * @param {string} categoria - Categoria do produto: "Bebidas", "Pizzas Salgadas", "Pizzas Doces"
+ */
+export const editarProduto = async (produto, categoria) => {
+  let url = "";
+  let payload = {};
+
+  if (categoria === "Bebidas") {
+    url = `https://pizzariamatteo.onrender.com/api/Bebida/${produto.id}`;
+    payload = {
+      id: produto.id,
+      nome: produto.nome,
+      valor: produto.preco,
+      foto: produto.foto,
+    };
+  } else {
+    const qntFatia = categoria === "Pizzas Salgadas" ? 0 : 1;
+    url = `https://pizzariamatteo.onrender.com/api/Pizza/${produto.id}`;
+    payload = {
+      id: produto.id,
+      sabor: produto.nome,
+      qntfatia: qntFatia,
+      valor: produto.preco,
+      descricao: produto.descricao,
+      ingredientes: produto.ingredientes,
+      foto: produto.foto,
+    };
+  }
+
+  const response = await fetch(url, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(payload),
+  });
+
+  if (!response.ok) {
+    throw new Error("Erro ao editar o produto");
+  }
+
+  return response;
+};
