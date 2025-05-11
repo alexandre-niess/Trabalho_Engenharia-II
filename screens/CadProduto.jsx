@@ -229,7 +229,7 @@ const CadProduto = () => {
               disabled={isSubmitting}
               sx={{ mt: 3, mb: 2 }}
             >
-              Cadastrar Prato
+              Cadastrar Produto
             </Button>
           </Box>
         </Box>

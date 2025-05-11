@@ -21,6 +21,7 @@ import IsOpen from "/components/IsOpen.jsx";
 import Loading from "../components/Loading";
 import { buscarPizzas, buscarBebidas } from "../service/produtoService";
 import { Link } from "react-router-dom";
+import ModalAviso from "../components/ModalAviso";
 
 const pizzaria = {
   nome: "Pizzaria Matteo",
@@ -135,6 +136,7 @@ export function Home() {
   return (
     <>
       <CssBaseline />
+      <ModalAviso />
       <Box sx={{ top: 0, position: "fixed", width: "100%" }}>
         <IsOpen />
         <Box

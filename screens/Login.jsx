@@ -118,6 +118,22 @@ export function Login() {
               </Button>
             </Box>
           </Box>
+          <Typography
+            variant="body2"
+            color="text.secondary"
+            align="center"
+            sx={{ mt: "20px" }}
+          >
+            {"Ainda não tem uma conta? "}
+            <Button
+              variant="outlined"
+              color="primary"
+              onClick={() => navigate("/cadastro-user")}
+              sx={{ ml: 2 }}
+            >
+              Cadastre-se
+            </Button>
+          </Typography>
         </Container>
       </Box>
     </>
