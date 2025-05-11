@@ -1,20 +1,37 @@
-# Plate POS System
+# 🍕 Pizzaria Matteo
 
 ## Sobre o Projeto
 
-O **Plate** é um sistema de Ponto de Venda (_Point of Sale_ - POS), desenvolvido com **ReactJS** e utilizando **Vite** como ferramenta de build. Seu objetivo é fornecer uma plataforma completa e moderna para a gestão de restaurantes e estabelecimentos similares, facilitando o gerenciamento de produtos, pedidos, perfis de funcionários e muito mais.
+O **Pizzaria Matteo** é um e-commerce completo desenvolvido em **ReactJS** com **Vite**, com o objetivo de digitalizar as vendas da pizzaria e oferecer uma experiência moderna e responsiva aos seus clientes. A plataforma permite navegação de produtos, seleção de sabores, carrinho, entrega e pagamento online.
 
-A plataforma será lançada inicialmente com um conjunto básico de funcionalidades, com um **roadmap contínuo de evolução e novos recursos**.
+Este projeto foi pensado para atender exclusivamente as operações da Pizzaria Matteo, com uma arquitetura escalável para evoluções futuras.
 
+---
+
+## Usuários de Teste
+
+Para facilitar, já deixamos criados alguns usuários para facilitar testes. Para acessar o painel de admin, basta estar logado na conta de admin e ir para a rota /admin.
+
+
+Usuário Comum:
+```bash
+e-mail: cliente@gmail.com
+senha: teste1234
+```
+Usuário Admin
+```bash
+e-mail: admin@gmail.com
+senha: teste1234
+```
 ---
 
 ## ✅ Pré-requisitos
 
 Antes de iniciar, você precisa ter instalado em sua máquina:
 
-- [Node.js (versão 18.x ou superior)](https://nodejs.org/)
-- [Git](https://git-scm.com/) para clonar o repositório
-- Um gerenciador de pacotes como **npm** ou **yarn** (o projeto usa `npm`)
+* [Node.js (versão 18.x ou superior)](https://nodejs.org/)
+* [Git](https://git-scm.com/) para clonar o repositório
+* Um gerenciador de pacotes como **npm** (utilizado neste projeto)
 
 Verifique se o Node está instalado corretamente:
 
@@ -30,7 +47,7 @@ npm -v
 1. **Clone este repositório:**
 
    ```bash
-   git clone https://github.com/alexandre-niess/Plate_POS_System.git
+   git clone https://github.com/alexandre-niess/Trabalho_Engenharia-II.git
    ```
 
 2. **Instale as dependências do projeto:**
@@ -45,136 +62,104 @@ npm -v
    npm run dev
    ```
 
-4. Acesse em seu navegador:
+4. Acesse no navegador:
+
    ```
-   http://localhost:3000
+   http://localhost:5173
    ```
 
-> 💡 O Vite irá fazer _hot reload_ automaticamente conforme você altera os arquivos do projeto.
+> 💡 O Vite faz hot reload automaticamente conforme você altera os arquivos do projeto.
 
 ---
 
 ## ✨ Funcionalidades
 
-- Cadastro e edição de restaurantes
-- Cadastro e edição de produtos
-- Gerenciamento de perfis de funcionários
-- Login e autenticação
-- Interface responsiva para dispositivos móveis
+* Visualização de cardápio com imagens
+* Adição ao carrinho com seleção de quantidade e tamanho (para pizzas)
+* Cadastro de usuários e login
+* Tela de entrega com cálculo de frete via Uber API
+* Integração com Stripe para pagamentos
+* Painel administrativo para gestão de produtos (pizzas e bebidas)
+* Upload de imagens com Firebase
+* Responsivo para dispositivos móveis
 
 ---
 
 ## 📁 Estrutura de Pastas
 
 ```
-├── .gitignore
-├── README.md
-├── components/
-│   ├── CardAdmin.jsx
+├── components
+│   ├── AdminPrivateRoute.jsx
 │   ├── CardProduto.jsx
 │   ├── Footer.jsx
 │   ├── Header.jsx
 │   ├── Icons.jsx
 │   ├── IsOpen.jsx
 │   ├── Loading.jsx
-│   └── TabelaProdutos.jsx
-├── public/
-│   ├── hamburguer.png
-│   ├── mockup_plate.png
-│   ├── suco.png
-│   └── xburguer.png
-├── screens/
+│   ├── PaymentForm.jsx
+│   ├── TabelaProdutos.jsx
+│   └── UserPrivateRoute.jsx
+├── context
+│   └── AuthContext.jsx
+├── screens
+│   ├── Admin.jsx
 │   ├── CadAdmin.jsx
-│   ├── CadPrato.jsx
-│   ├── CadRestaurante/
-│   │   ├── CadRestaurante.jsx
-│   │   ├── Step1.jsx
-│   │   ├── Step2.jsx
-│   │   ├── Step3.jsx
-│   │   └── Step4.jsx
+│   ├── CadProduto.jsx
+│   ├── CadUser.jsx
 │   ├── Carrinho.jsx
-│   ├── EditPrato.jsx
+│   ├── DadosPizzaria.jsx
+│   ├── DetalhesProduto.jsx
+│   ├── EditProduto.jsx
+│   ├── Entrega.jsx
+│   ├── Home.jsx
 │   ├── Login.jsx
-│   ├── PerfilEmp.jsx
-│   ├── Produto.jsx
-│   ├── Restaurant.jsx
-│   └── admin/
-│       ├── MainController.jsx
-│       ├── SidebarMenu.jsx
-│       └── screens/
-│           ├── Cardapio.jsx
-│           ├── Construction.jsx
-│           ├── Restaurante.jsx
-│           └── dadosmockados.js
-├── src/
+│   ├── Pagamento.jsx
+│   └── Produto.jsx
+├── service
+│   ├── carrinhoService.js
+│   ├── entregaService.js
+│   ├── pagamentoService.js
+│   ├── produtoService.js
+│   └── userService.js
+├── src
 │   ├── App.jsx
 │   └── main.jsx
-├── index.html
-├── package.json
-├── package-lock.json
-└── vite.config.js
+├── utils
+│   ├── buscaCEP.js
+│   ├── getAuth.js
+│   └── mascaras.js
+├── public
+│   └── logo.png
+├── vite.config.js
+└── README.md
 ```
 
 ---
 
-## 🔧 Descrição de Arquivos
+## 🔧 Descrição de Pastas
 
-- **components/**: Componentes reutilizáveis da interface (cards, headers, ícones, etc.).
-- **screens/**: Telas completas e principais fluxos da aplicação.
-- **admin/screens/**: Seção de telas administrativas, como `Cardapio` e `Restaurante`.
-- **public/**: Arquivos estáticos e imagens.
-- **src/**: Ponto de entrada da aplicação (`main.jsx`).
-
----
-
-## 🗺️ Roadmap
-
-### Versão 1.0 (Atual)
-
-- Cadastro de restaurantes e pratos
-- Gerenciamento básico via painel administrativo
-
-### Futuras Versões
-
-- Integração com gateways de pagamento
-- Dashboard de relatórios e métricas financeiras
-- Suporte a múltiplos estabelecimentos
-- Módulo de fidelidade e cupons
-- Chat de atendimento ao cliente
+* **components/**: Componentes reutilizáveis como cabeçalho, formulários, e controles de autenticação.
+* **screens/**: Telas principais do usuário e do painel administrativo.
+* **service/**: Arquivos responsáveis por comunicação com o backend e Firebase.
+* **utils/**: Funções auxiliares (como busca de CEP e autenticação).
+* **public/**: Imagens públicas e outros assets estáticos.
 
 ---
 
-## 🤝 Contribuição
+## 🛣️ Roadmap
 
-Contribuições são bem-vindas! Siga os passos abaixo:
+### Versão Atual (1.0)
 
-1. Faça um fork do projeto
-2. Crie uma branch com sua feature ou correção:
-   ```bash
-   git checkout -b feature/nova-funcionalidade
-   ```
-3. Commit suas alterações:
-   ```bash
-   git commit -m "feat: nova funcionalidade"
-   ```
-4. Suba a branch:
-   ```bash
-   git push origin feature/nova-funcionalidade
-   ```
-5. Abra um **Pull Request**
+* Navegação e visualização de produtos
+* Carrinho com controle de quantidade
+* Tela de entrega integrada com Uber API
+* Pagamento com Stripe
+* Painel de administração completo
 
----
+### Futuras Melhorias
 
-## 📬 Contato
-
-Em caso de dúvidas, sugestões ou bugs, entre em contato:
-
-**Autor:** [Alexandre Niess](https://portfolio-alexandre-niess.web.app/)
-
----
-
-> 💡 Este projeto está em desenvolvimento ativo. Fique à vontade para contribuir ou acompanhar as atualizações!
-
-```
-
-```
+* Histórico de pedidos
+* Notificações por e-mail
+* Cupom de desconto
+* Avaliações de produtos
+* Dashboard com métricas de vendas
